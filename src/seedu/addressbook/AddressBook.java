@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Scanner;
@@ -614,8 +615,10 @@ public class AddressBook {
      * @return feedback display message for the operation result
      */
     private static String executeSortAllPersonsInAddressBook() {
-        //TODO: implement the method;
-        return "todo";
+        ArrayList<String[]> toBeDisplayed = new ArrayList<>(getAllPersonsInAddressBook());
+        sortAllPersonsInAlphabeticalOrder(toBeDisplayed);
+        showToUser(toBeDisplayed);
+        return getMessageForPersonsDisplayedSummary(toBeDisplayed);
     }
 
     /**
@@ -730,6 +733,19 @@ public class AddressBook {
         return latestPersonListingView.get(lastVisibleIndex - DISPLAYED_INDEX_OFFSET);
     }
 
+    /**
+     * Sort the list of persons according to their names in alphabetical order.
+     */
+    private static void sortAllPersonsInAlphabeticalOrder(ArrayList<String[]> toBeDisplayed) {
+        Collections.sort(toBeDisplayed, new Comparator<>() {
+            @Override
+            public int compare(String[] o1, String[] o2) {
+                return String.CASE_INSENSITIVE_ORDER.
+                        compare(o1[PERSON_DATA_INDEX_NAME],
+                                o2[PERSON_DATA_INDEX_NAME]);
+            }
+        });
+    }
 
     /*
      * ===========================================
