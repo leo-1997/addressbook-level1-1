@@ -617,7 +617,7 @@ public class AddressBook {
     private static String executeSortAllPersonsInAddressBook() {
         ArrayList<String[]> toBeDisplayed = new ArrayList<>(getAllPersonsInAddressBook());
         sortAllPersonsInAlphabeticalOrder(toBeDisplayed);
-        showToUser(toBeDisplayed);
+        showToUserInSortedOrder(toBeDisplayed);
         return getMessageForPersonsDisplayedSummary(toBeDisplayed);
     }
 
@@ -673,6 +673,14 @@ public class AddressBook {
         String listAsString = getDisplayString(persons);
         showToUser(listAsString);
         updateLatestViewedPersonListing(persons);
+    }
+
+    /**
+     * Show the list of persons to the user.
+     */
+    private static void showToUserInSortedOrder(ArrayList<String[]> persons) {
+        String listAsString = getDisplayString(persons);
+        showToUser(listAsString);
     }
 
     /**
