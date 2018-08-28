@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /*
  * NOTE : =============================================================
@@ -491,14 +492,26 @@ public class AddressBook {
      * @return list of persons in full model with name containing some of the keywords
      */
     private static ArrayList<String[]> getPersonsWithNameContainingAnyKeyword(Collection<String> keywords) {
+        Set<String> keywordsToUpperCase = changeStringToUpperCase(keywords);
         final ArrayList<String[]> matchedPersons = new ArrayList<>();
         for (String[] person : getAllPersonsInAddressBook()) {
             final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person)));
-            if (!Collections.disjoint(wordsInName, keywords)) {
+            Set<String> wordsInNameToUpperCase = changeStringToUpperCase(wordsInName);
+            if (!Collections.disjoint(wordsInNameToUpperCase, keywordsToUpperCase)) {
                 matchedPersons.add(person);
             }
         }
         return matchedPersons;
+    }
+
+    /**
+     * Convert all the elements in the collection to upper case.
+     *
+     * @param stringSet original String collection to convert.
+     * @return a set of String which are all in upper case.
+     */
+    private static Set<String> changeStringToUpperCase(Collection<String> stringSet) {
+        return stringSet.stream().map(String::toUpperCase).collect(Collectors.toSet());
     }
 
     /**
