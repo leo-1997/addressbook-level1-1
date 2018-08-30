@@ -226,6 +226,11 @@ public class AddressBook {
         showWelcomeMessage();
         processProgramArgs(args);
         loadDataFromStorage();
+        whileLoop();
+        return;
+    }
+
+    private static void whileLoop() {
         while (true) {
             String userCommand = getUserInput();
             echoUserCommand(userCommand);
